@@ -11,6 +11,6 @@
     "tests-affected": {"path": "testfiles.py", "script": "run_tests_affected", "parser": "get_parser_affected",
                        "help": "Get a list of tests affected by changes", "virtualenv": false},
     "install": {"path": "install.py", "script": "run", "parser": "get_parser", "help": "Install browser components",
-                "install": ["mozdownload", "mozinstall"]},
+                "install": ["mozdownload", "mozinstall", "zstandard"]},
     "branch-point": {"path": "testfiles.py", "script": "display_branch_point", "parser": null, "help": "Print branch point from master", "virtualenv": false}
 }
