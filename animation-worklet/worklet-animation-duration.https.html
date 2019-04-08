@@ -1,7 +1,6 @@
 <html>
 <title>WorkletAnimation should continue to be in effect forever, even if its duration is passed</title>
 <link rel="help" href="https://drafts.css-houdini.org/css-animationworklet/">
-<link rel="match" href="worklet-animation-duration-ref.html">
 
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
@@ -27,14 +26,14 @@
     const animation = new WorkletAnimation('constant_time', effect);
     animation.play();
 
-    let expected_transform = "matrix(1, 0, 0, 1, 0, 100)";
-    await waitForAnimationFrameWithCondition(_ => {
-      return getComputedStyle(box).transform == expected_transform;
-    });
+    const expected_transform = "matrix(1, 0, 0, 1, 0, 100)";
 
+    await waitForNotNullLocalTime(animation);
+    assert_equals(getComputedStyle(box).transform, expected_transform);
     // The animation is specified to last for 1 millisecond
-    await new Promise(resolve => step_timeout(resolve, 500));
+    await new Promise(resolve => step_timeout(resolve, 1500));
 
-    assert_equals(getComputedStyle(document.getElementById("box")).transform, expected_transform);
+    await waitForNotNullLocalTime(animation);
+    assert_equals(getComputedStyle(box).transform, expected_transform);
   }, "WorkletAnimation should continue to be in effect forever, even if its duration is passed");
 </script>
